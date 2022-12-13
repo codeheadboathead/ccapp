@@ -1,6 +1,7 @@
 import 'package:ccappdev/cardspage.dart';
 import 'package:ccappdev/practicepage.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(MyApp());

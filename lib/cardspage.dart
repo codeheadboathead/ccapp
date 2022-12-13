@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ccappdev/homecontroller.dart';
 
 class cardspage extends StatefulWidget {
   const cardspage({Key? key}) : super(key: key);
@@ -8,67 +9,139 @@ class cardspage extends StatefulWidget {
 }
 
 class _cardspageState extends State<cardspage> {
+
+  late TextEditingController controller;
+  String title = '';
+  int _cardcount = 0;
+  List<String> namelist = [];
+  List<int> card =[];
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    controller = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: Colors.blueGrey,
-      child: GridView.builder(
-          itemCount: 6,
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
-          itemBuilder: (cntx,index){
-            return Container(
+      body: Padding(
+        padding: const EdgeInsets.only(top: 12.0),
+        child: GridView.builder(
+            itemCount: _cardcount,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2
+            ),
+            itemBuilder: (cntx,index){
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  color: Colors.black,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
 
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(20),
-              alignment: Alignment.topLeft,
-              height: 50,
-              width: 100,
-              child: Column(
-                children: [
-                  Text('Title\nSORRY\n'
-                    ,
-                    style: TextStyle(
-                      fontFamily: 'IndieFlower',
-                      color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
 
-                      fontSize:25,
+                             Column(
+                               children: [
+                                 Text(
+                                   '${title}',
+                                   style: TextStyle(
+                                       color: Colors.white,
+                                       fontSize: 25
+                                   ),
+                                 )]),
 
+
+
+                            IconButton(
+                              color: Colors.white,
+                              onPressed: () {
+                                setState((){
+                                  _cardcount -=1;
+
+                                });
+
+                              },
+                              icon: Icon(Icons.delete),)
+                          ],
+                        )
+
+                      ],
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: Icon(
-                      Icons.delete,
-                      color: Colors.white,
-                    ),
 
-                  )
-                ],
+
+
+
+
+
+                ),
+              );
+            }
+        ),
+      ),
+
+
+
+
+
+
+
+      floatingActionButton: FloatingActionButton(
+      onPressed: () async {
+        final title =  await opendailog();
+        if (title == null || title.isEmpty) return;
+        setState (() => this.title = title );
+        _cardcount +=1;
+        //addtolist(controller.text);
+      },
+      child: Icon(Icons.add),
+      backgroundColor: Colors.black,)
+      );
+
+  }
+  Future<String?> opendailog() => showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Add Title'),
+        content: TextField(
+          autofocus: true,
+          decoration: InputDecoration(hintText: 'Title of flashcard'),
+          controller: controller,
+          onSubmitted: (_) =>submit(),
+        ),
+        actions: [
+          TextButton(
+              onPressed: submit,
+              child: Text('Submit',
+              style: TextStyle(
+                color: Colors.black
               ),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.black,
-                  border: Border.all(
-                      color: Colors.white,
-                      width: 5
-
-                  )
-
-              ),
-
-
-            );
-
-
-          }),
-    ),
-    floatingActionButton: FloatingActionButton(
-    onPressed: () {  },
-    child: Icon(Icons.add),
-    backgroundColor: Colors.black,)
-    );
+              )
+          )
+        ],
+      )
+  );
+  void submit() {
+    Navigator.of(context).pop(controller.text);
+    controller.clear();
   }
 }

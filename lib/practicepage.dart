@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:ccappdev/cardspage.dart';
+import 'homecontroller.dart';
 
 class practicepage extends StatefulWidget {
   const practicepage({Key? key}) : super(key: key);
@@ -14,25 +16,25 @@ class _practicepageState extends State<practicepage> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        color: Colors.blueGrey,
+        color: Colors.white,
         child: Column(
           children: [
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.black,
+              color: Colors.white,
               thickness: 5,
             ),
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
             Center(
@@ -41,7 +43,7 @@ class _practicepageState extends State<practicepage> {
                  width: 300,
                  alignment: Alignment.center,
 
-                 child : Text('card #1\n\n\n\nTITLE\n'
+                 child : Text('card #\n\n\n\nTITLE\n'
                     ,
                     style: TextStyle(
                       fontFamily: 'IndieFlower',
@@ -68,46 +70,50 @@ class _practicepageState extends State<practicepage> {
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
             Divider(
               indent: 20,
               endIndent: 20,
-              color: Colors.blueGrey,
+              color: Colors.white,
               thickness: 15,
             ),
-            TextButton(
-                onPressed: null,
-                child: Text('Show Answer'),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.black),
-                foregroundColor: MaterialStateProperty.all(Colors.white),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
-                  side: BorderSide(color: Colors.white)
+            Container(
+              child: TextButton(
+                  onPressed: (){
+                    opendailog();
+                  },
+                  child: Text('Show Answer'),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.black),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                    side: BorderSide(color: Colors.white)
+                  )
                 )
-              )
-            ),
+              ),
+              ),
             )
           ],
         ),
@@ -118,5 +124,26 @@ class _practicepageState extends State<practicepage> {
           child: Icon(Icons.arrow_forward_ios_outlined),
           backgroundColor: Colors.black,)
     );
+  }
+  Future<String?> opendailog() => showDialog<String>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Answer'),
+
+        actions: [
+          TextButton(
+              onPressed: close,
+              child: Text('close',
+                style: TextStyle(
+                    color: Colors.black
+                ),
+              )
+          )
+        ],
+      )
+  );
+  void close() {
+    Navigator.of(context).pop();
+
   }
 }
